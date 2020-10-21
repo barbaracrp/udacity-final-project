@@ -1,0 +1,19 @@
+{
+  "name": "udacity-final-project",
+  "version": "1.0.0",
+  "description": "## Overview This project requires you to create an asynchronous web app that uses Web API and user data to dynamically update the UI.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barbaracrp/udacity-project-3.git"
+  },
+  "author": "barbaracrp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/barbaracrp/udacity-project-3/issues"
+  },
+  "homepage": "https://github.com/barbaracrp/udacity-project-3#readme"
+}
