@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node src/server/index.js",
+    "start": "node src/server/server.js",
     "build-prod": "webpack --config webpack.prod.js",
     "build-dev": "webpack-dev-server  --config webpack.dev.js --open"
   },
@@ -37,6 +37,11 @@
     "workbox-webpack-plugin": "^5.1.4"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "follow-redirects": "^1.13.0",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.5"
   }

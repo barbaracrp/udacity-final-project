@@ -1,28 +1,33 @@
 function handleSubmit(event) {
-    event.preventDefault()
+  event.preventDefault();
+  const locationField = document.getElementById('location');
+  const dateField = document.getElementById('date');
+  const location = locationField.value;
+  const date = dateField.value;
 
-    // check what text was put into the form field
-    const formText = document.getElementById('name').value
-    if (formText.trim().length === 0) {
-        alert("type a phrase or a word")
-        return;
-    }
-    Client.checkForName(formText)
-    const newObject = {text: formText}
+  if (location.trim().length === 0) {
+    alert('type a city and a country');
+    locationField.focus();
+    return;
+  }
 
-    console.log("::: Form Submitted :::")
-    fetch('http://localhost:8080/sentiment', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newObject),
-      })
-    .then(res => res.json())
-    .then(function(res) {
-        document.getElementById('results').innerHTML = res.irony
-    })
+  if (date.trim().length === 0) {
+    alert('type a date');
+    dateField.focus();
+    return;
+  }
+
+  const url = 'http://localhost:3000/trip/expectation?location=' + location + '&date=' + date;
+  fetch(url).then(function (res) {
+    return res.json();
+  }).then(function (tripInfo) {
+    document.getElementById('full-location').innerHTML = tripInfo.fullLocation;
+    document.getElementById('temp-min').innerHTML = tripInfo.tempMin;
+    document.getElementById('temp-max').innerHTML = tripInfo.tempMax;
+    document.getElementById('weather-description').innerHTML = tripInfo.weatherDesc;
+    document.getElementById('weather-icon').src = tripInfo.weatherIcon;
+    document.getElementById('location-pic').src = tripInfo.locationPic;
+  });
 }
 
 export { handleSubmit };

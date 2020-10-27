@@ -1,22 +1,17 @@
-// //Geonames
-// const apiKey =
-// const baseURL =
+const assert = require('assert');
+const dotenv = require('dotenv');
+dotenv.config();
 
-// //Weatherbit
-// const apiKey =
-// const baseURL =
+assert(process.env.WEATHERBIT_API_KEY, 'WEATHERBIT_API_KEY should be set');
+assert(process.env.PIXABAY_API_KEY, 'PIXABAY_API_KEY should be set');
 
-// //Pixabay
-// const apiKey =
-// const baseURL =
+//Weatherbit
+const weatherBitApiKey = process.env.WEATHERBIT_API_KEY;
+const weatherBitBaseURL = '';
 
-
-
-
-// Setup empty JS object to act as endpoint for all routes
-const projectData = {
-  tempEntry: []
-};
+//Pixabay
+const pixaBayApiKey = process.env.PIXABAY_API_KEY;
+const pixaBayBaseURL = '';
 
 // Require Express to run server and routes
 const express = require('express'); //importando o express
@@ -36,7 +31,7 @@ app.use(cors());              // sem secutity interrupcoes
 
 // Initialize the main project folder
 // allows us to write server-side code that can them connect to client-side code wich would be in a folder called website
-app.use(express.static('website')); //pointed our app to the folder that we want them to look at.(connects our server-side code (server.js) to our client side code (website)folder)
+app.use(express.static('dist')); //pointed our app to the folder that we want them to look at.(connects our server-side code (server.js) to our client side code (website)folder)
 
 // Setup Server
 const port = 3000;
@@ -50,22 +45,20 @@ function listening(){
 //GET route
 // There should be a GET route setup on the server side with the first argument as a string naming the route,
 //and the second argument a callback function to return the JS object created at the top of server code.
-app.get('/all', sendData);
-function sendData(req, res) {
-  res.send(projectData);
-};
+app.get('/trip/expectation', function sendData(reqBrowser, resServer) {
+  // TODO: Pegar a info de cidade e data do query string da requisicao. Criar variaveis pra cada valor
+  const location = reqBrowser.query.location;
+  const date =  reqBrowser.query.date;
+  console.log(`GET /trip/expectation?location=${location}&date=${date}`);
 
-//POST route
-//You should be able to add an entry to the project endpoint using a POST route setup on the server side
-//and executed on the client side as an asynchronous function.
-//The server side function should create a new entry in the apps endpoint (the named JS object) consisting
-//of the data received from the client side POST.
-app.post('/add', function addData(req, res) {
-  const newEntry = {
-    "date" : req.body.date,
-    "temp" : req.body.temp,
-    "feelings" : req.body.feelings,
-  };
-  projectData.tempEntry.push(newEntry);
-  res.send(projectData.tempEntry);
+  // TODO: Preparar uma resposta FAKE para retornar para a aplicacao
+  const tripInfo = {};
+  tripInfo.fullLocation = 'Times Square, New York, US';
+  tripInfo.tempMin = 0;
+  tripInfo.tempMax = 40;
+  tripInfo.weatherDesc = 'Few clouds';
+  tripInfo.weatherIcon = 'https://www.weatherbit.io/static/img/icons/c02d.png';
+  tripInfo.locationPic = 'https://cdn.pixabay.com/photo/2020/06/08/20/58/nyc-5276112_150.jpg';
+  // TODO: Enviar a resposta usando respostaServer.send()
+  resServer.send(tripInfo);
 });
