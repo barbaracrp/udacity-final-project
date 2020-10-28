@@ -3,12 +3,12 @@ const https = require('follow-redirects').https;
 const weatherBitApiKey = process.env.WEATHERBIT_API_KEY;
 const weatherBitBaseURL = process.env.WEATHERBIT_URL;
 
-const getWeatherForecastAtCityByDate = async (city, date) => {
+const getWeatherForecastAtLocationByDate = async (geolocation, date) => {
   return new Promise((resolve, reject) => {
     const options = {
       'method': 'GET',
       'hostname': weatherBitBaseURL,
-      'path': `/v2.0/forecast/daily?city=${encodeURI(city)}&key=${weatherBitApiKey}`,
+      'path': `/v2.0/forecast/daily?lat=${geolocation.lat}&lon=${geolocation.lng}&key=${weatherBitApiKey}`,
       'headers': {
       },
       'maxRedirects': 20
@@ -43,4 +43,4 @@ const getWeatherForecastAtCityByDate = async (city, date) => {
   })
 }
 
-module.exports = {getWeatherForecastAtCityByDate};
+module.exports = {getWeatherForecastAtLocationByDate};

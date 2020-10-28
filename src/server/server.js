@@ -3,10 +3,15 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 assert(process.env.WEATHERBIT_API_KEY, 'WEATHERBIT_API_KEY should be set');
+assert(process.env.WEATHERBIT_URL, 'WEATHERBIT_URL should be set');
 assert(process.env.PIXABAY_API_KEY, 'PIXABAY_API_KEY should be set');
+assert(process.env.PIXABAY_URL, 'PIXABAY_URL should be set');
+assert(process.env.GEONAMES_KEY, 'GEONAMES_KEY should be set');
+assert(process.env.GEONAMES_URL, 'GEONAMES_URL should be set');
 
 const weatherBitClient = require('./weatherbit-client');
 const pixabayClient = require('./pixabay-client');
+const geonamesClient = require('./geonames-client');
 
 // Require Express to run server and routes
 const express = require('express'); //importando o express
@@ -47,7 +52,10 @@ app.get('/trip/expectation', function sendData(reqBrowser, resServer) {
   console.log(`GET /trip/expectation?location=${location}&date=${date}`);
 
   let tripInfo;
-  weatherBitClient.getWeatherForecastAtCityByDate(location, '2020-10-30')
+  geonamesClient.getGeolocation(location)
+    .then((geolocation) => {
+      return weatherBitClient.getWeatherForecastAtLocationByDate(geolocation, '2020-10-30');
+    })
     .then((weatherInfo) => {
       tripInfo = {...weatherInfo};
 
@@ -62,9 +70,4 @@ app.get('/trip/expectation', function sendData(reqBrowser, resServer) {
       console.error(error);
       resServer.status(500).send(error);
     });
-});
-
-process.on('uncaughtException', function (err) {
-  console.error((new Date).toUTCString() + ' uncaughtException:', err.message);
-  console.error(err.stack);
 });
