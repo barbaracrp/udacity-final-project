@@ -5,13 +5,11 @@ dotenv.config();
 assert(process.env.WEATHERBIT_API_KEY, 'WEATHERBIT_API_KEY should be set');
 assert(process.env.PIXABAY_API_KEY, 'PIXABAY_API_KEY should be set');
 
-//Weatherbit
-const weatherBitApiKey = process.env.WEATHERBIT_API_KEY;
-const weatherBitBaseURL = '';
+const weatherBitClient = require('./weatherbit-client');
 
 //Pixabay
 const pixaBayApiKey = process.env.PIXABAY_API_KEY;
-const pixaBayBaseURL = '';
+const pixaBayBaseURL = process.env.PIXABAY_URL;
 
 // Require Express to run server and routes
 const express = require('express'); //importando o express
@@ -51,14 +49,15 @@ app.get('/trip/expectation', function sendData(reqBrowser, resServer) {
   const date =  reqBrowser.query.date;
   console.log(`GET /trip/expectation?location=${location}&date=${date}`);
 
-  // TODO: Preparar uma resposta FAKE para retornar para a aplicacao
-  const tripInfo = {};
-  tripInfo.fullLocation = 'Times Square, New York, US';
-  tripInfo.tempMin = 0;
-  tripInfo.tempMax = 40;
-  tripInfo.weatherDesc = 'Few clouds';
-  tripInfo.weatherIcon = 'https://www.weatherbit.io/static/img/icons/c02d.png';
-  tripInfo.locationPic = 'https://cdn.pixabay.com/photo/2020/06/08/20/58/nyc-5276112_150.jpg';
-  // TODO: Enviar a resposta usando respostaServer.send()
-  resServer.send(tripInfo);
+  weatherBitClient.getWeatherForecastAtCityByDate(location, '2020-10-30')
+    .then((weatherInfo) => {
+      const tripInfo = {...weatherInfo};
+      tripInfo.locationPic = 'https://cdn.pixabay.com/photo/2020/06/08/20/58/nyc-5276112_150.jpg';
+
+      resServer.send(tripInfo);
+    })
+    .catch((error) => {
+      console.error(error);
+      resServer.status(500).send(error);
+    });
 });
