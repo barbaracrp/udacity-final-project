@@ -6,10 +6,7 @@ assert(process.env.WEATHERBIT_API_KEY, 'WEATHERBIT_API_KEY should be set');
 assert(process.env.PIXABAY_API_KEY, 'PIXABAY_API_KEY should be set');
 
 const weatherBitClient = require('./weatherbit-client');
-
-//Pixabay
-const pixaBayApiKey = process.env.PIXABAY_API_KEY;
-const pixaBayBaseURL = process.env.PIXABAY_URL;
+const pixabayClient = require('./pixabay-client');
 
 // Require Express to run server and routes
 const express = require('express'); //importando o express
@@ -49,10 +46,15 @@ app.get('/trip/expectation', function sendData(reqBrowser, resServer) {
   const date =  reqBrowser.query.date;
   console.log(`GET /trip/expectation?location=${location}&date=${date}`);
 
+  let tripInfo;
   weatherBitClient.getWeatherForecastAtCityByDate(location, '2020-10-30')
     .then((weatherInfo) => {
-      const tripInfo = {...weatherInfo};
-      tripInfo.locationPic = 'https://cdn.pixabay.com/photo/2020/06/08/20/58/nyc-5276112_150.jpg';
+      tripInfo = {...weatherInfo};
+
+      return pixabayClient.getPicByLocation(tripInfo.fullLocation);
+    })
+    .then((pic) => {
+      tripInfo = { ...tripInfo, ...pic };
 
       resServer.send(tripInfo);
     })
@@ -60,4 +62,9 @@ app.get('/trip/expectation', function sendData(reqBrowser, resServer) {
       console.error(error);
       resServer.status(500).send(error);
     });
+});
+
+process.on('uncaughtException', function (err) {
+  console.error((new Date).toUTCString() + ' uncaughtException:', err.message);
+  console.error(err.stack);
 });

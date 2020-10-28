@@ -23,7 +23,7 @@ const getWeatherForecastAtCityByDate = async (city, date) => {
         const body = Buffer.concat(chunks);
         const obj = JSON.parse(body.toString());
 
-        const fullLocation = `${obj.city_name}, ${obj.state_code}, ${obj.country_code}`;
+        const fullLocation = `${obj.city_name}, ${obj.country_code}`;
         const forecast = obj.data.find((f) => f.valid_date === date);
         const tempMin = forecast.min_temp;
         const tempMax = forecast.max_temp;
