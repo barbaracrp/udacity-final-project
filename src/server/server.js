@@ -54,7 +54,7 @@ app.get('/trip/expectation', function sendData(reqBrowser, resServer) {
   let tripInfo;
   geonamesClient.getGeolocation(location)
     .then((geolocation) => {
-      return weatherBitClient.getWeatherForecastAtLocationByDate(geolocation, '2020-10-30');
+      return weatherBitClient.getWeatherForecastAtLocationByDate(geolocation, date);
     })
     .then((weatherInfo) => {
       tripInfo = {...weatherInfo};
