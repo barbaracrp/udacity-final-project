@@ -48,8 +48,8 @@ const getWeatherForecastAtLocationByDate = async (geolocation, date) => {
 
         const fullLocation = `${obj.city_name}, ${obj.country_code}`;
         const forecast = api === 'history' ? obj.data[0] : obj.data.find((f) => f.valid_date === date);
-        const tempMin = forecast.min_temp;
-        const tempMax = forecast.max_temp;
+        const tempMin = `${forecast.min_temp} &deg;C`;
+        const tempMax = `${forecast.max_temp} &deg;C`;
         const weatherInfo = {fullLocation, tempMin, tempMax};
 
         if (forecast.weather) {

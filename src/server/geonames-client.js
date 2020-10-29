@@ -22,7 +22,6 @@ const getGeolocation = async (city) => {
       response.on("end", function (chunk) {
         const body = Buffer.concat(chunks);
         const obj = JSON.parse(body.toString());
-        console.log(obj);
 
         const address = obj.address;
         if (!address) {

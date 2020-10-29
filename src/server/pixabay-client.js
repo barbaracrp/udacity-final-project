@@ -24,7 +24,7 @@ const getPicByLocation = async (city) => {
         const obj = JSON.parse(body.toString());
 
         const hits = obj.hits;
-        let locationPic = '';
+        let locationPic = 'https://via.placeholder.com/150x100png?text=No+image+found';
         if (Array.isArray(hits) && hits.length > 0) {
           locationPic = hits[0].previewURL;
         }

@@ -8,47 +8,53 @@
 </head>
 
 <body>
-  <h1 class="holder headline">
-    Travel App
-  </h1>
+  <header>
+    <h1 class="holder headline">
+      Travel App
+    </h1>
+  </header>
   <main id="app">
-    <h2>Information about your trip:</h2>
-    <section>
+    <section id="first">
+      <h2>Weather information about your trip:</h2>
       <form>
-        <label for="location">Enter City, Country here</label>
-        <input type="text" id="location" minlength="" maxlength="" placeholder="city, country here">
-        <label for="date">Trip date</label>
-        <input id="date" type="date" placeholder="Enter your trip date">
-        <button id="search" type="submit"> Search </button>
+        <label for="location">Enter Location:</label>
+        <input required type="text" id="location" minlength="" maxlength="" placeholder="location">
+        <label for="date">Trip Date:</label>
+        <input required id="date" type="date" placeholder="Trip date">
+        <button id="search" type="submit">Search</button>
       </form>
     </section>
-    <section>
-      <h3>Trip Information:</h3>
-      <div>
-        <div>
-          <p id="full-location"></p>
-          <div>
-            <h5>Typical weather for then is:</h5>
-            <h6>Low</h6>
-            <p id="temp-min"></p>
-            <h6>High</h6>
-            <p id="temp-max"></p>
-            <p id="weather-description"></p>
-            <img id="weather-icon" src="" alt="">
-          </div>
-        </div>
-        <div><img id="location-pic" src="" alt=""></div>
+    <section id="second" class="hidden">
+      <h2>Trip Information:</h2>
+      <div class="trip-info-row">
+        <h4 id="full-location" class="full-location"></h4>
+        <img id="location-pic" class="location-pic" src="" alt="">
+      </div>
+      <div class="trip-info-row">
+        <h5>Typical weather for then is:</h5>
+      </div>
+      <div class="trip-info-row">
+        <p>Low</p>
+        <p id="temp-min"></p>
+      </div>
+      <div class="trip-info-row">
+        <p>High</p>
+        <p id="temp-max"></p>
+      </div>
+      <div class="trip-info-row">
+        <p id="weather-description"></p>
+        <img id="weather-icon" class="weather-icon" src="" alt="">
       </div>
     </section>
-
   </main>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const searchButton = document.getElementById('search');
       searchButton.addEventListener('click', function listener(event) {
         Client.handleSubmit(event);
       });
     });
+
   </script>
 </body>
 

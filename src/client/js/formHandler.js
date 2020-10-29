@@ -27,6 +27,7 @@ function handleSubmit(event) {
     document.getElementById('weather-description').innerHTML = tripInfo.weatherDesc;
     document.getElementById('weather-icon').src = tripInfo.weatherIcon;
     document.getElementById('location-pic').src = tripInfo.locationPic;
+    document.getElementById('second').classList.remove('hidden');
   });
 }
 
