@@ -10,12 +10,25 @@ This is the Capstone project for my Udacity Front-end Nanodegree course.
 
 In order to run this project, you'll need to create a `.env` file at the root directory of the project, containing the follwing environment variables:
 
-- `WEATHERBIT_API_KEY`
-- `WEATHERBIT_URL`
-- `PIXABAY_API_KEY`
-- `PIXABAY_URL`
-- `GEONAMES_URL`
-- `GEONAMES_KEY`
+#### API domains for `.env` file
+
+> Below should be included as is in your `.env` file
+
+```text
+WEATHERBIT_URL=api.weatherbit.io
+PIXABAY_URL=pixabay.com
+GEONAMES_URL=api.geonames.org
+```
+
+#### API keys for `.env` file
+
+> Fill the variable values' with your own API keys (WeatherBit, Pixabay) and username for Geonames API
+
+```text
+WEATHERBIT_API_KEY=<your-api-key>
+PIXABAY_API_KEY=<your-api-key>
+GEONAMES_KEY=<your-username>
+```
 
 ### Running the project
 
