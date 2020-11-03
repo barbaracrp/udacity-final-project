@@ -4,27 +4,23 @@ body {
   display: grid;
 }
 
-#app {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  height: 100vh;
+main {
+  display: flex;
+  flex-direction: row;
+  flex-direction: column;
   background: #FFE4C4;
   color: black;
-  justify-content: center;
+  justify-content: start;
   grid-gap: 1rem;
   font-size: 20px;
   font-family: 'Merriweather Sans', sans-serif;
   padding: 2rem;
 }
 
-@media all and (max-width: 719px) {
-  #app {
-    grid-template-columns: 100%;
-  }
-}
-
 #first {
-  justify-self: start;
+  display: grid;
+  grid-template-columns: 100%;
+  justify-items: center;
   width: 100%;
 }
 
