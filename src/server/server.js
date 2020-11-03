@@ -53,11 +53,12 @@ app.get('/trip/expectation', function sendData(reqBrowser, resServer) {
 
   let tripInfo;
   geonamesClient.getGeolocation(location)
-    .then((geolocation) => {
+    .then(({fullLocation, ...geolocation}) => {
+      tripInfo = {fullLocation};
       return weatherBitClient.getWeatherForecastAtLocationByDate(geolocation, date);
     })
     .then((weatherInfo) => {
-      tripInfo = {...weatherInfo};
+      tripInfo = {...tripInfo, ...weatherInfo};
 
       return pixabayClient.getPicByLocation(tripInfo.fullLocation);
     })

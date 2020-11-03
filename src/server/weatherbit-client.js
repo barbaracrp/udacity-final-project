@@ -27,7 +27,6 @@ const getWeatherForecastAtLocationByDate = async (geolocation, date) => {
 
       path += `&start_date=${startDate}&end_date=${endDate}`;
     }
-    console.log(`https://${weatherBitBaseURL}${path}`);
     const options = {
       'method': 'GET',
       'hostname': weatherBitBaseURL,
@@ -46,11 +45,10 @@ const getWeatherForecastAtLocationByDate = async (geolocation, date) => {
         const body = Buffer.concat(chunks);
         const obj = JSON.parse(body.toString());
 
-        const fullLocation = `${obj.city_name}, ${obj.country_code}`;
         const forecast = api === 'history' ? obj.data[0] : obj.data.find((f) => f.valid_date === date);
         const tempMin = `${forecast.min_temp} &deg;C`;
         const tempMax = `${forecast.max_temp} &deg;C`;
-        const weatherInfo = {fullLocation, tempMin, tempMax};
+        const weatherInfo = {tempMin, tempMax};
 
         if (forecast.weather) {
           weatherInfo.weatherDesc = forecast.weather.description;

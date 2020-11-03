@@ -8,7 +8,7 @@ const getGeolocation = async (city) => {
     const options = {
       'method': 'GET',
       'hostname': geonamesBaseURL,
-      'path': `/geoCodeAddressJSON?q=${encodeURI(city)}&username=${geonamesApiKey}`,
+      'path': `/searchJSON?q=${encodeURI(city)}&username=${geonamesApiKey}&maxRows=2`,
       'headers': {
       },
       'maxRedirects': 20
@@ -23,17 +23,17 @@ const getGeolocation = async (city) => {
         const body = Buffer.concat(chunks);
         const obj = JSON.parse(body.toString());
 
-        const address = obj.address;
-        if (!address) {
+        if (obj.totalResultsCount === 0) {
           reject('Couldn\'t find the location of your trip');
           return;
         }
+        const address = obj.geonames[0];
 
+        const fullLocation = `${address.name}, ${address.countryName}`;
         const lat = address.lat;
         const lng = address.lng;
-        const countryCode = address.countryCode;
 
-        resolve({lat, lng, countryCode});
+        resolve({lat, lng, fullLocation});
       });
 
       response.on("error", function (error) {

@@ -36,6 +36,30 @@ GEONAMES_KEY=<your-username>
 2. Execute `npm run build-prod` to compile the project using Webpack
 3. Execute `npm run start` to run the API which statically serves the front-end app.
 
+### Project dependencies
+
+#### Client app
+
+None. Just vanilla JavaScript.
+
+#### Server API
+
+##### NPM Packages
+
+1. body-parser
+2. cors
+3. dotenv
+4. express
+5. follow-redirects
+6. webpack
+7. webpack-cli
+
+##### Third-party services
+
+1. Geonames.org
+2. Weatherbit.io
+3. Pixabay.com
+
 ## Extras
 
 As an extra-mile, I included the Weather icon. It would only appear in case the trip is in at most until 16 days away.
